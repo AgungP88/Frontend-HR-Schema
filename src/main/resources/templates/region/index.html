@@ -1,0 +1,45 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/_layout}">
+    <head>
+        <title>MBKM - Region Page</title>
+        <!--<th:block th:include="layout/_layout :: _head"></th:block>-->
+    </head>
+    <body>
+        <div class="col content" layout:fragment="content">
+            <h3 class="float-start">Region Menu</h3>
+            <a th:href="@{/region/add}">
+                <input type="submit" value="Add New" class="btn btn-success mb-2 float-end">
+            </a>
+<!--            <button type="button" class="btn btn-primary mb-2 float-end" 
+                    data-toggle="modal" data-target="#saveRegion"
+                    th:onclick="addRegion()">
+                Modal Add New
+            </button>-->
+            <button type="button" class="btn btn-warning mb-2 float-end" 
+                    data-toggle="modal" data-target="#ajaxCreateForm"
+                    >
+                Modal Ajax Add
+            </button>
+        <table id="table-data" border="0" class="table table-sm-8 table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+        </table>
+            <div th:replace="region/save-form :: modal">
+            </div>
+            <div th:replace="region/save-form-ajax :: modal-ajax">
+            </div>
+            
+        </div>
+        <th:block layout:fragment="scripts">
+            <script th:src="@{/js/region/modal-index.js}"></script>
+            <script th:src="@{/js/region/index.js}"></script>
+            <script th:src="@{/js/region/parse-region.js}"></script>
+            <!--<script th:src="@{/js/dataTables.js}"></script>-->
+            <script th:src="@{/js/region/ajax-dataTables.js}"></script>
+        </th:block>
+    </body>
+</html>

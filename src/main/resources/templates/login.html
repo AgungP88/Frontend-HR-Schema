@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>MBKM - Login Form</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" 
+              rel="stylesheet" 
+              integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" 
+              crossorigin="anonymous">
+        <link th:href="@{/css/style.css}" rel="stylesheet">
+    </head>
+    <body class="text-center">
+        <form th:action="@{/login}" class="form-signin needs-validation was-validated" th:object="${auth}" method="POST">
+            <img class="mb-4" src="https://www.mii.co.id/-/media/project/corporate/identity/mii-logo.png" alt="MII logo" width="72" height="72">
+            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input type="text" th:field="*{username}" class="form-control" placeholder="Email address" required autofocus>
+            <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="invalid-feedback"></div>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" th:field="*{password}" class="form-control" placeholder="Password" required>
+            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-feedback"></div>
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+            </div>
+            <div class="justify-content-between w-100 align-items-center mb-3">
+                <a href="#" class="btn-link">Forgot Password</a>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            <p class="mt-5 mb-3 text-muted">© 2021</p>
+        </form>
+    </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" 
+    crossorigin="anonymous"></script>
+</html>

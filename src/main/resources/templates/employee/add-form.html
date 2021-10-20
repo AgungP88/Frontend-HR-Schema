@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/_layout}">
+    <head>
+        <title>MBKM - Employee Form</title>
+        <!--<th:block th:include="layout/_layout :: _head"></th:block>-->
+    </head>
+    <body>
+        <div class="col content" layout:fragment="content">
+        <form th:action="@{/employee/add}" th:object="${employee}" method="POST" id="addForm">
+        <h3>Employee Menu</h3>
+        <div class="card col-10 form-data">
+            <div class="card-header">
+                <h3>Employee Form</h3>
+            </div>      
+            <div class="card-body">
+                <!--add first name-->
+                <div class="form-group">
+                    <label for="First Name">First Name</label>
+                    <input type="text" class="form-control" placeholder="Please Input First Name" th:field="*{firstName}"/>
+                    <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+                </div>
+                
+                <!--add last name-->
+                <div class="form-group">
+                    <label for="Last Name">Last Name</label>
+                    <input type="text" class="form-control" placeholder="Please Input Last Name" th:field="*{lastName}"/>
+                    <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+                </div>
+                    
+                <!--add emial-->
+                <div class="form-group">
+                    <label for="Email">Email</label><br>
+                    <input type="text" class="form-control" placeholder="Please Input Email" th:field="*{email}"/>
+                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                </div>
+                    
+                <!--add phone number-->
+                <div class="form-group">
+                    <label for="Email">Phone Number</label><br>
+                    <input type="text" class="form-control" placeholder="Please Input Phone Number" th:field="*{phoneNumber}"/>
+                    <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
+                </div>
+                    
+                <!--add hire date-->
+                <div class="form-group">
+                    <label for="Hire Date">Hire Date</label><br>
+                    <input type="date" class="form-control" placeholder="Please Input Hire Date" th:field="*{hireDate}"/>
+                    <p th:if="${#fields.hasErrors('hireDate')}" th:errors="*{hireDate}"></p>
+                </div>
+                    
+                <!--add salary-->
+                <div class="form-group">
+                    <label for="Salary">Salary</label><br>
+                    <input type="number" class="form-control" placeholder="Please Input Salary" th:field="*{salary}"/>
+                    <p th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></p>
+                </div>
+                    
+                <!--add commission pct-->
+                <div class="form-group">
+                    <label for="Commission Pct">Commission Pct</label><br>
+                    <input type="number" class="form-control" placeholder="Please Input Commission Pct" th:field="*{commissionPct}"/>
+                    <p th:if="${#fields.hasErrors('commissionPct')}" th:errors="*{commissionPct}"></p>
+                </div>
+                    
+                <!--add job-->
+                <div class="form-group">
+                    <label for="Job">Job</label><br>
+                    <select class="form-control" th:field="*{jobId}"> 
+                        <option 
+                            th:each="job : ${jobs}" 
+                            th:text="${job.title}" 
+                            th:value="${job.id}"
+                            >       
+                        </option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('job')}" th:errors="*{job}"></p>
+                </div>
+                    
+                <!--add manager-->
+                <div class="form-group">
+                    <label for="manager">Manager</label><br>
+                    <select class="form-control" th:field="*{managerId}"> 
+                        <option 
+                            th:each="employee : ${employees}" 
+                            th:text="${employee.firstName}" 
+                            th:value="${employee.id}"
+                            >       
+                        </option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('employee')}" th:errors="*{employee}"></p>
+                </div>
+                    
+                <!--add department-->
+                <div class="form-group">
+                    <label for="Department">Department</label><br>
+                    <select th:field="*{departmentId}" class="form-control"> 
+                        <option 
+                            th:each="department : ${departments}" 
+                            th:text="${department.name}" 
+                            th:value="${department.id}"
+                            >       
+                        </option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('department')}" th:errors="*{department}"></p>
+                </div>
+                <button type="submit" class="btn btn-success">Submit</button>
+               </div>
+            </div>
+            </form>
+        </div>
+    <th:block layout:fragment="scripts">
+        <script th:src="@{/js/employee/index.js}"></script>
+    </th:block>
+    </body>
+</html>

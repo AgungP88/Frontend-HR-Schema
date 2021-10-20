@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head th:fragment="_head">
+        <title></title>
+        <meta name="_csrf" th:content="${_csrf.token}"/>
+        <!-- default header name is X-CSRF-TOKEN -->
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.css">
+        <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+        <link th:href="@{/css/layout.css}" rel="stylesheet">
+    </head>
+    <body>
+        <main>
+        <!-- Start Sidebar -->
+        <nav class="navbar navbar-expand-md navbar-dark">
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a class="navbar-brand" href="#">
+            <img src="https://www.mii.co.id/-/media/project/corporate/identity/mii-logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            <span class="menu-collapsed">Mitra Integrasi Informatika</span>
+          </a>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+
+              <li class="nav-item dropdown d-sm-block d-md-none">
+                <a class="nav-link dropdown-toggle" href="#" id="smallerscreenmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Menu
+                </a>
+                <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                    <a class="dropdown-item" th:href="@{/index}" 
+                       sec:authorize="isAuthenticated()">Dashboard</a>
+                    <a class="dropdown-item" th:href="@{/employee/}" 
+                       sec:authorize="hasAnyRole('ADMIN', 'OPERATOR')">Employee</a>
+                    <a class="dropdown-item" th:href="@{/country/}" 
+                       sec:authorize="hasAnyRole('ADMIN', 'OPERATOR')">Country</a>
+                    <a class="dropdown-item" th:href="@{/department/}" 
+                       sec:authorize="hasAnyRole('ADMIN', 'OPERATOR')">Department</a>
+                    <a class="dropdown-item" th:href="@{/job/}" 
+                       sec:authorize="hasAnyRole('ADMIN', 'OPERATOR')">Job</a>
+                    <a class="dropdown-item" th:href="@{/location/}" 
+                       sec:authorize="hasAnyRole('ADMIN', 'OPERATOR')">Location</a>
+                    <a class="dropdown-item" th:href="@{/region/}" 
+                       sec:authorize="hasAnyRole('ADMIN', 'OPERATOR')">Region</a>
+                    <a class="dropdown-item" href="#" 
+                       sec:authorize="isAuthenticated()">Profile</a>
+                </div>
+              </li>
+
+            </ul>
+          </div>
+            <form th:action="@{/logout}" method="POST" >
+                <input type="submit" value="Logout" 
+                       class="btn btn-danger float-end" 
+                       th:onclick="logoutAction()"
+                       sec:authorize="isAuthenticated()">>
+                </form>
+        </nav>
+
+
+        <div class="row" id="body-row">
+            <div id="sidebar-container" class="sidebar-expanded d-none d-md-block">
+                <ul class="list-group">
+                    <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
+                        <small>MAIN MENU</small>
+                    </li>
+                    
+                    <!--Employee Menu-->
+                    <a th:href="@{/index}" data-toggle="collapse" 
+                       aria-expanded="false" 
+                       class="bg-dark list-group-item list-group-item-action flex-column align-items-start active"
+                       sec:authorize="hasAnyRole('ADMIN', 'OPERATOR')">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="fa fa-dashboard fa-fw mr-3"></span>
+                            <span class="menu-collapsed">Dashboard</span>
+                        </div>
+                    </a>
+                    
+                    <!--Employee Menu-->
+                    <a href="#employee" data-toggle="collapse" 
+                       aria-expanded="false" 
+                       class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
+                       sec:authorize="hasAnyRole('ADMIN', 'OPERATOR')">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="fa fa-users fa-fw mr-3"></span>
+                            <span class="menu-collapsed">Employee</span>
+                            <span class="submenu-icon ml-auto"></span>
+                        </div>
+                    </a>
+                    <div id='employee' class="collapse sidebar-submenu">
+                        <a th:href="@{/employee/}" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Index</span>
+                        </a>
+                        <a th:href="@{/employee/add}" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Add Employee</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Edit Employee</span>
+                        </a>
+                    </div>
+                    
+                    <!--Country Menu-->
+                    <a href="#country" data-toggle="collapse" 
+                       aria-expanded="false" 
+                       class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
+                       sec:authorize="hasAnyRole('ADMIN', 'OPERATOR')">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="fa fa-flag fa-fw mr-3"></span>
+                            <span class="menu-collapsed">Country</span>
+                            <span class="submenu-icon ml-auto"></span>
+                        </div>
+                    </a>
+                    <div id='country' class="collapse sidebar-submenu">
+                        <a th:href="@{/country/}" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Index</span>
+                        </a>
+                        <a th:href="@{/country/add}" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Add Country</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Edit Country</span>
+                        </a>
+                    </div>
+                    
+                    <!--Department Menu-->
+                    <a href="#department" data-toggle="collapse" 
+                       aria-expanded="false" 
+                       class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
+                       sec:authorize="hasAnyRole('ADMIN', 'OPERATOR')">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="fa fa-building fa-fw mr-3"></span>
+                            <span class="menu-collapsed">Department</span>
+                            <span class="submenu-icon ml-auto"></span>
+                        </div>
+                    </a>
+                    <div id='department' class="collapse sidebar-submenu">
+                        <a th:href="@{/department/}" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Index</span>
+                        </a>
+                        <a th:href="@{/department/add}" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Add Department</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Edit Department</span>
+                        </a>
+                    </div>
+                    
+                    <!--Job Menu-->
+                    <a href="#job" data-toggle="collapse" 
+                       aria-expanded="false" 
+                       class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
+                       sec:authorize="hasAnyRole('ADMIN', 'OPERATOR')">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="fa fa-briefcase fa-fw mr-3"></span>
+                            <span class="menu-collapsed">Job</span>
+                            <span class="submenu-icon ml-auto"></span>
+                        </div>
+                    </a>
+                    <div id='job' class="collapse sidebar-submenu">
+                        <a th:href="@{/job/}" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Index</span>
+                        </a>
+                        <a th:href="@{/job/add}" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Add Job</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Edit Job</span>
+                        </a>
+                    </div>
+                    
+                    <!--Location Menu-->
+                    <a href="#location" data-toggle="collapse" 
+                       aria-expanded="false" 
+                       class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
+                       sec:authorize="hasAnyRole('ADMIN', 'OPERATOR')">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="fa fa-location-arrow fa-fw mr-3"></span>
+                            <span class="menu-collapsed">Location</span>
+                            <span class="submenu-icon ml-auto"></span>
+                        </div>
+                    </a>
+                    <div id='location' class="collapse sidebar-submenu">
+                        <a th:href="@{/location/}" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Index</span>
+                        </a>
+                        <a th:href="@{/location/add}" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Add Location</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Edit Location</span>
+                        </a>
+                    </div>
+                    
+                    <!--Region Menu-->
+                    <a href="#region" data-toggle="collapse" 
+                       aria-expanded="false" 
+                       class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
+                       sec:authorize="hasAnyRole('ADMIN', 'OPERATOR')">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="fa fa-globe fa-fw mr-3"></span>
+                            <span class="menu-collapsed">Region</span>
+                            <span class="submenu-icon ml-auto"></span>
+                        </div>
+                    </a>
+                    <div id='region' class="collapse sidebar-submenu">
+                        <a th:href="@{/region/}" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Index</span>
+                        </a>
+                        <a th:href="@{/region/add}" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Add Region</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Edit Region</span>
+                        </a>
+                    </div>
+                    
+                    <!--Employee Menu-->
+                    <a href="#profil" data-toggle="collapse" 
+                       aria-expanded="false" 
+                       class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
+                       sec:authorize="hasAnyRole('ADMIN', 'OPERATOR')">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="fa fa-user fa-fw mr-3"></span>
+                            <span class="menu-collapsed">Profile</span>
+                            <span class="submenu-icon ml-auto"></span>
+                        </div>
+                    </a>
+                    <div id='profil' class="collapse sidebar-submenu">
+                        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Show Profile</span>
+                        </a>
+                    </div>   
+                    
+
+                </ul>
+            </div> <!-- End Sidebar -->
+
+            <!-- MAIN -->
+            <div class="col content" layout:fragment="content">
+
+            </div>
+        </div>
+        </main>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+        <script th:src="@{/js/eventOnClick.js}"></script>
+        <th:block layout:fragment="scripts">
+        
+        </th:block>
+        
+        <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>-->
+    </body>
+</html>

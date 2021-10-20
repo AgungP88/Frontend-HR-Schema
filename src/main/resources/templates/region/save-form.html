@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div th:fragment="modal">
+        <form th:action="@{/region/add}" th:object="${region}" method="POST" id="regionForm">
+                <input id="hidden" type="hidden" name="_method" value="PUT">
+            <div class="modal fade" id="saveRegion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      <!--Add ID-->
+                    <div class="form-group">
+                        <label for="id">Id</label>
+                        <input type="number" id="id" class="form-control" placeholder="Please Input ID" th:field="*{id}"/>
+                        <p th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></p>
+                    </div>
+                    <!--Add Name-->
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" class="form-control" placeholder="Please Input Name" th:field="*{name}"/>
+                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>                
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success" th:onclick="saveAction()">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </form>
+        </div>
+    </body>
+</html>

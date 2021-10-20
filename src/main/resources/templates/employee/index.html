@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/_layout}">
+    <head>
+        <title>MBKM - Home Page</title>
+    <!--<th:block th:include="layout/_layout :: _head"></th:block>-->
+    </head>
+    <body>
+        <div class="col content" layout:fragment="content">
+            <h3 class="float-start">Employee Menu</h3>
+            <a th:href="@{/employee/add}">
+                <input type="submit" value="Add New" class="btn btn-success mb-2 float-end">
+            </a>
+            <button type="button" class="btn btn-primary mb-2 float-end" data-toggle="modal" 
+                    data-target="#ajaxCreateEmployee" th:onclick="addEmployee()">
+                Modal Add New
+            </button>
+            
+            <div class="">
+            <table id="table-data" border="0" class="table table-sm-8 table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <!--<th>ID</th>-->
+                        <th>First Name</th>
+                        <!--<th>Last Name</th>-->
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Hire Date</th>
+                        <!--<th>Salary</th>-->
+                        <!--<th>Commission Pct</th>-->
+                        <th>Job Title</th>
+                        <th>Manager Name</th>
+                        <th>Department Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+            </table>
+                <div th:replace="/employee/save-form :: modal">
+                    
+                </div>
+                <div th:replace="/employee/save-form-ajax :: modal-ajax">
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    <th:block layout:fragment="scripts">
+        <script th:src="@{/js/employee/modal-index.js}"></script>
+        <script th:src="@{/js/employee/index.js}"></script>
+        <script th:src="@{/js/employee/parse-employee.js}"></script>
+        <script th:src="@{/js/employee/ajax-dataTables.js}"></script>
+    </th:block>
+    </body>
+</html>

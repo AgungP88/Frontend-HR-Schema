@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/_layout}">
+    <head>
+        <title>MBKM - Country Page</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <th:block th:include="layout/_layout :: _head"></th:block>
+    </head>
+    <body>
+        <div class="col content" layout:fragment="content">
+        <a th:href="@{/country/add}">
+            <input type="submit" value="Add New" class="btn btn-success mb-2">
+        </a>
+        <table id="table-data" border="0" class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Region Id</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <tr th:each="country, i : ${countries}">
+                    <td th:text="${i.count}"></td>
+                    <td th:text="${country.name}"></td>
+                    <td th:text="${country.region.name}"></td>
+                    <td>
+                        <!--Update Button-->
+                        <button class="btn btn-primary">
+                            <a class="text-white" th:href="@{/country/edit/{id} (id = ${country.id})}">
+                                Edit
+                            </a>
+                        </button>
+                        
+                        <!--Delete Button-->
+                        <form 
+                              th:action="@{/country/{id} (id = ${country.id})}" 
+                              th:method="DELETE"
+                        >
+                            <button class="btn btn-danger" id="submitForm" th:onclick="deleteAction()">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Region Id</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </tfoot>
+        </table>
+        </div>
+        <th:block layout:fragment="scripts">
+        <script th:src="@{/js/dataTables.js}"></script>
+    </th:block>
+    </body>
+</html>

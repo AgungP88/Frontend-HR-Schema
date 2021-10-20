@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/_layout}">
+    <head>
+        <title>MBKM - Location Form</title>
+        <!--<th:block th:include="layout/_layout :: _head"></th:block>-->
+    </head>
+    <body>
+        <div class="col content" layout:fragment="content">
+        <h3>Location Form</h3>
+        <form th:action="@{/location/{id} (id = ${location.id})}" 
+              th:object="${location}" th:method="PUT">
+            <div class="card col-10 form-data">
+            <div class="card-header">
+                <h3>Location Form</h3>
+            </div>      
+            <div class="card-body">
+                <!--add ID-->
+                <div class="form-group">
+                    <label for="id">ID</label>
+                    <input type="number" class="form-control" placeholder="Please Input ID" readonly th:field="*{id}"/>
+                    <p th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></p>
+                </div>
+                
+                <!--add city-->
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" class="form-control" placeholder="Please Input City" th:field="*{city}"/>
+                    <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
+                </div>
+                
+                <!--add postal code-->
+                <div class="form-group">
+                    <label for="postal code">Postal Code</label>
+                    <input type="text" class="form-control" placeholder="Please Input Postal Code" th:field="*{postalCode}"/>
+                    <p th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"></p>
+                </div>
+                
+                <!--add state province-->
+                <div class="form-group">
+                    <label for="state province">State Province</label>
+                    <input type="text" class="form-control" placeholder="Please Input State Province" th:field="*{province}"/>
+                    <p th:if="${#fields.hasErrors('province')}" th:errors="*{province}"></p>
+                </div>
+                
+                <!--add street address-->
+                <div class="form-group">
+                    <label for="Street Address">Street Address</label>
+                    <input type="text" class="form-control" placeholder="Please Input Street Address" th:field="*{street}"/>
+                    <p th:if="${#fields.hasErrors('street')}" th:errors="*{street}"></p>
+                </div>
+                
+                <!--add country-->
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <select class="form-control" th:field="*{countryId}"> 
+                        <option 
+                            th:each="country : ${countries}" 
+                            th:text="${country.name}" 
+                            th:value="${country.id}"
+                            >       
+                        </option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></p>
+                </div>
+                <button type="submit" class="btn btn-success" th:onclick="saveAction()">Submit</button>
+            </div>
+            </div>
+            </form>
+        </div>
+        <th:block layout:fragment="scripts">
+        </th:block>
+    </body>
+</html>

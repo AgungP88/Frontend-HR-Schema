@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/_layout}">
+    <head>
+        <title>MBKM - Job Page</title>
+        <!--<th:block th:include="layout/_layout :: _head"></th:block>-->
+    </head>
+    <body>
+        <div class="col content" layout:fragment="content">
+            <a th:href="@{/job/add}">
+                <input type="submit" value="Add New" class="btn btn-success mb-2">
+            </a>
+        <table id="table-data" border="0" class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Min Salary</th>
+                    <th scope="col">Max Salary</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <tr th:each="job : ${jobs}">
+                    <td th:text="${job.id}"></td>
+                    <td th:text="${job.title}"></td>
+                    <td th:text="${job.min_salary}"></td>
+                    <td th:text="${job.max_salary}"></td>
+                    <td>
+                        <!--Update Button-->
+                        <button class="btn btn-primary">
+                            <a class="text-white" th:href="@{/job/edit/{id} (id = ${job.id})}">
+                                Edit
+                            </a>
+                        </button>
+                        
+                        <!--Delete Button-->
+                        <form 
+                              th:action="@{/job/{id} (id = ${job.id})}" 
+                              th:method="DELETE"
+                        >
+                            <button class="btn btn-danger" id="submitForm" th:onclick="deleteAction()">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Min Salary</th>
+                    <th scope="col">Max Salary</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </tfoot>
+        </table>
+        </div>
+        <th:block layout:fragment="scripts">
+            <script th:src="@{/js/dataTables.js}"></script>
+        </th:block>
+    </body>
+</html>
+

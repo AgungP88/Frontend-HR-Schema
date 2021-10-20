@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/_layout}">
+    <head>
+        <title>MBKM - Home Page</title>
+    <th:block th:include="layout/_layout :: _head"></th:block>
+    </head>
+    <body>
+        <div class="col content" layout:fragment="content">
+            <h1>Welcome to MBKM System</h1>
+        </div>
+        <th:block th:include="layout/_layout :: scripts"></th:block>
+    </body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div th:fragment="modal">
+            <form th:action="@{/employee/add}" th:object="${employee}" method="POST" id="employeeForm">
+                <input id="hidden" type="hidden" name="_method" value="PUT">
+            <div class="modal fade" id="saveEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                <!--add first name-->
+                <div class="form-group">
+                    <label for="First Name">First Name</label>
+                    <input type="text" id="firstName" class="form-control" placeholder="Please Input First Name" th:field="*{firstName}"/>
+                    <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+                </div>
+                
+                <!--add last name-->
+                <div class="form-group">
+                    <label for="Last Name">Last Name</label>
+                    <input type="text" id="lastName" class="form-control" placeholder="Please Input Last Name" th:field="*{lastName}"/>
+                    <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+                </div>
+                    
+                <!--add emial-->
+                <div class="form-group">
+                    <label for="Email">Email</label><br>
+                    <input type="text" id="email" class="form-control" placeholder="Please Input Email" th:field="*{email}"/>
+                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                </div>
+                    
+                <!--add phone number-->
+                <div class="form-group">
+                    <label for="Email">Phone Number</label><br>
+                    <input type="text" id="phoneNumber" class="form-control" placeholder="Please Input Phone Number" th:field="*{phoneNumber}"/>
+                    <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
+                </div>
+                    
+                <!--add hire date-->
+                <div class="form-group">
+                    <label for="Hire Date">Hire Date</label><br>
+                    <input type="date" id="hireDate" class="form-control" placeholder="Please Input Hire Date" th:field="*{hireDate}"/>
+                    <p th:if="${#fields.hasErrors('hireDate')}" th:errors="*{hireDate}"></p>
+                </div>
+                    
+                <!--add salary-->
+                <div class="form-group">
+                    <label for="Salary">Salary</label><br>
+                    <input type="number" id="salary" class="form-control" placeholder="Please Input Salary" th:field="*{salary}"/>
+                    <p th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></p>
+                </div>
+                    
+                <!--add commission pct-->
+                <div class="form-group">
+                    <label for="Commission Pct">Commission Pct</label><br>
+                    <input type="number" id="commissionPct" class="form-control" placeholder="Please Input Commission Pct" th:field="*{commissionPct}"/>
+                    <p th:if="${#fields.hasErrors('commissionPct')}" th:errors="*{commissionPct}"></p>
+                </div>
+                    
+                <!--add job-->
+                <div class="form-group">
+                    <label for="Job">Job</label><br>
+                    <select id="job" class="form-control" th:field="*{jobId}"> 
+                        <option 
+                            th:each="job : ${jobs}" 
+                            th:text="${job.title}" 
+                            th:value="${job.id}"
+                            >       
+                        </option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('job')}" th:errors="*{job}"></p>
+                </div>
+                    
+                <!--add manager-->
+                <div class="form-group">
+                    <label for="manager">Manager</label><br>
+                    <select id="manager" class="form-control" th:field="*{managerId}"> 
+                        <option 
+                            th:each="employee : ${employees}" 
+                            th:text="${employee.firstName}" 
+                            th:value="${employee.id}"
+                            >       
+                        </option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('employee')}" th:errors="*{employee}"></p>
+                </div>
+                    
+                <!--add department-->
+                <div class="form-group">
+                    <label for="Department">Department</label><br>
+                    <select id="department" th:field="*{departmentId}" class="form-control"> 
+                        <option 
+                            th:each="department : ${departments}" 
+                            th:text="${department.name}" 
+                            th:value="${department.id}"
+                            >       
+                        </option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('department')}" th:errors="*{department}"></p>
+                </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success" th:onclick="saveAction()">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </form>
+        </div>
+    </body>
+</html>

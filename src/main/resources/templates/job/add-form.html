@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/_layout}">
+    <head>
+        <title>MBKM - Job Form</title>
+        <!--<th:block th:include="layout/_layout :: _head"></th:block>-->
+    </head>
+    <body>
+        <div class="col content" layout:fragment="content">
+        <h3>Job Form</h3>
+        <form th:action="@{/job/add}" th:object="${job}" method="POST">
+        <div class="card col-10 form-data">
+            <div class="card-header">
+                <h3>Job Form</h3>
+            </div>      
+            <div class="card-body">
+                <!--add id-->
+                <div class="form-group">
+                    <label for="Id">Id</label>
+                    <input type="text" class="form-control" placeholder="Please Input ID" th:field="*{id}"/>
+                    <p th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></p>
+                </div>
+                
+                <!--add title-->
+                <div class="form-group">
+                    <label for="id">Title</label>
+                    <input type="text" class="form-control" placeholder="Please Input Title" th:field="*{title}"/>
+                    <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+                </div>
+                
+                <!--add min salary-->
+                <div class="form-group">
+                    <label for="min salary">Min Salary</label>
+                    <input type="number" class="form-control" placeholder="Please Input Min Salary" th:field="*{min_salary}"/>
+                    <p th:if="${#fields.hasErrors('min_salary')}" th:errors="*{min_salary}"></p>
+                </div>
+                
+                <!--add max salary-->
+                <div class="form-group">
+                    <label for="max salary">Max Salary</label>
+                    <input type="number" class="form-control" placeholder="Please Input Max Salary" th:field="*{max_salary}"/>
+                    <p th:if="${#fields.hasErrors('max_salary')}" th:errors="*{max_salary}"></p>
+                </div>
+                <button type="submit" class="btn btn-success" th:onclick="saveAction()">Submit</button>
+            </div>
+            </div>
+            </form>
+        </div>
+        <th:block layout:fragment="scripts">
+        </th:block>
+    </body>
+</html>
